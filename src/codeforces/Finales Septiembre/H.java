@@ -1,0 +1,406 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.StringTokenizer;
+
+public class H 
+{
+	static class Scanner
+	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer("");
+		
+		public String nextLine()
+		{
+			try
+			{
+				return br.readLine();
+			}
+			catch(Exception e)
+			{
+				throw(new RuntimeException());
+			}
+		}
+		
+		public String next()
+		{
+			while(!st.hasMoreTokens())
+			{
+				String l = nextLine();
+				if(l == null)
+					return null;
+				st = new StringTokenizer(l);
+			}
+			return st.nextToken();
+		}
+		
+		public int nextInt()
+		{
+			return Integer.parseInt(next());
+		}
+		
+		public long nextLong()
+		{
+			return Long.parseLong(next());
+		}
+		
+		public double nextDouble()
+		{
+			return Double.parseDouble(next());
+		}
+		
+		public int[] nextIntArray(int n)
+		{
+			int[] res = new int[n];
+			for(int i = 0; i < res.length; i++)
+				res[i] = nextInt();
+			return res;
+		}
+		
+		public long[] nextLongArray(int n)
+		{
+			long[] res = new long[n];
+			for(int i = 0; i < res.length; i++)
+				res[i] = nextLong();
+			return res;
+		}
+		
+		public double[] nextDoubleArray(int n)
+		{
+			double[] res = new double[n];
+			for(int i = 0; i < res.length; i++)
+				res[i] = nextDouble();
+			return res;
+		}
+		public void sortIntArray(int[] array)
+		{
+			Integer[] vals = new Integer[array.length];
+			for(int i = 0; i < array.length; i++)
+				vals[i] = array[i];
+			Arrays.sort(vals);
+			for(int i = 0; i < array.length; i++)
+				array[i] = vals[i];
+		}
+		
+		public void sortLongArray(long[] array)
+		{
+			Long[] vals = new Long[array.length];
+			for(int i = 0; i < array.length; i++)
+				vals[i] = array[i];
+			Arrays.sort(vals);
+			for(int i = 0; i < array.length; i++)
+				array[i] = vals[i];
+		}
+		
+		public void sortDoubleArray(double[] array)
+		{
+			Double[] vals = new Double[array.length];
+			for(int i = 0; i < array.length; i++)
+				vals[i] = array[i];
+			Arrays.sort(vals);
+			for(int i = 0; i < array.length; i++)
+				array[i] = vals[i];
+		}
+
+		public String[] nextStringArray(int n) 
+		{	
+			String[] vals = new String[n];
+			for(int i = 0; i < n; i++)
+				vals[i] = next();
+			return vals;
+		}
+		
+		public Integer nextInteger()
+		{
+			String s = next();
+			if(s == null)
+				return null;
+			return Integer.parseInt(s);
+		}
+		
+		public int[][] nextIntMatrix(int n, int m)
+		{
+			int[][] ans = new int[n][];
+			for(int i = 0; i < n; i++)
+				ans[i] = nextIntArray(m);
+			return ans;
+		}
+		
+		public char[][] nextGrid(int r) 
+		{
+			char[][] grid = new char[r][];
+			for(int i = 0; i < r; i++)
+				grid[i] = next().toCharArray();
+			return grid;
+		}
+		
+		public static <T> T fill(T arreglo, int val)
+		{
+			if(arreglo instanceof Object[])
+			{
+				Object[] a = (Object[]) arreglo;
+				for(Object x : a)
+					fill(x, val);
+			}
+			else if(arreglo instanceof int[])
+				Arrays.fill((int[]) arreglo, val);
+			else if(arreglo instanceof double[])
+				Arrays.fill((double[]) arreglo, val);
+			else if(arreglo instanceof long[])
+				Arrays.fill((long[]) arreglo, val);
+			return arreglo;
+		}
+		
+		<T> T[] nextObjectArray(Class <T> clazz, int size)
+		{
+			@SuppressWarnings("unchecked")
+			T[] result = (T[]) java.lang.reflect.Array.newInstance(clazz, size);
+			for(int c = 0; c < 3; c++)
+			{
+				Constructor <T> constructor;
+				try 
+				{
+					if(c == 0)
+						constructor = clazz.getDeclaredConstructor(Scanner.class, Integer.TYPE);
+					else if(c == 1)
+						constructor = clazz.getDeclaredConstructor(Scanner.class);
+					else
+						constructor = clazz.getDeclaredConstructor();
+				} 
+				catch(Exception e)
+				{
+					continue;
+				}
+				try
+				{
+					for(int i = 0; i < result.length; i++)
+					{
+						if(c == 0)
+							result[i] = constructor.newInstance(this, i);
+						else if(c == 1)
+							result[i] = constructor.newInstance(this);
+						else
+							result[i] = constructor.newInstance();	
+					}
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+				return result;
+			}
+			throw new RuntimeException("Constructor not found");
+		}
+		
+		public void printLine(int... vals)
+		{
+			if(vals.length == 0)
+				System.out.println();
+			else
+			{
+				System.out.print(vals[0]);
+				for(int i = 1; i < vals.length; i++)
+					System.out.print(" ".concat(String.valueOf(vals[i])));
+				System.out.println();
+			}
+		}
+		
+		public void printLine(long... vals)
+		{
+			if(vals.length == 0)
+				System.out.println();
+			else
+			{
+				System.out.print(vals[0]);
+				for(int i = 1; i < vals.length; i++)
+					System.out.print(" ".concat(String.valueOf(vals[i])));
+				System.out.println();
+			}
+		}
+		
+		public void printLine(double... vals)
+		{
+			if(vals.length == 0)
+				System.out.println();
+			else
+			{
+				System.out.print(vals[0]);
+				for(int i = 1; i < vals.length; i++)
+					System.out.print(" ".concat(String.valueOf(vals[i])));
+				System.out.println();
+			}
+		}
+		
+		public void printLine(int prec, double... vals)
+		{
+			if(vals.length == 0)
+				System.out.println();
+			else
+			{
+				System.out.printf("%." + prec + "f", vals[0]);
+				for(int i = 1; i < vals.length; i++)
+					System.out.printf(" %." + prec + "f", vals[i]);
+				System.out.println();
+			}
+		}
+		
+		public Collection <Integer> wrap(int[] as)
+		{
+			ArrayList <Integer> ans = new ArrayList <Integer> ();
+			for(int i : as)
+				ans.add(i);
+			return ans;
+		}
+	}
+	
+	static class Palabra
+	{
+		int[] veces = new int[26];
+		int id;
+		
+		public Palabra(Scanner sc)
+		{
+			for(char c : sc.next().toCharArray())
+				veces[c - 'a']++;
+		}
+		
+		boolean can(Palabra challenge)
+		{
+			for(int i = 0; i < 26; i++)
+				if(challenge.veces[i] > veces[i])
+					return false;
+			return true;
+		}
+	}
+	
+	static class Edge 
+	{
+		int from, to, index;
+		long cap, flow;
+
+		Edge(int fromi, int toi, long capi, long flowi, int indexi)
+		{
+			from = fromi;
+			to = toi;
+			cap = capi;
+			flow = flowi;
+			index = indexi;
+		}
+	}
+	
+	static class Dinic 
+	{
+		  int N;
+		  ArrayList <Edge> [] G;
+		  Edge[] dad;
+		  int[] Q;
+		  
+		  @SuppressWarnings("unchecked")
+		Dinic(int N1)
+		  {
+			  N = N1;
+			  G = new ArrayList[N];
+			  for(int i = 0; i < N; i++)
+				  G[i] = new ArrayList <Edge> ();
+			  dad = new Edge[N];
+			  Q = new int[N];
+		  }
+		  
+		  void AddEdge(int from, int to, int cap)
+		  {
+		    G[from].add(new Edge(from, to, cap, 0, G[to].size()));
+		    if (from == to) G[from].get(G[from].size() - 1).index++;
+		    G[to].add(new Edge(to, from, 0, 0, G[from].size() - 1));
+		  }
+
+		  Edge especial = new Edge(0, 0, 0, 0, 0);
+		  
+		  long BlockingFlow(int s, int t)
+		  {
+			  Arrays.fill(dad, null);
+			  dad[s] = especial;
+		    
+		    int head = 0, tail = 0;
+		    Q[tail++] = s;
+		    while (head < tail)
+		    {
+		      int x = Q[head++];
+		      for (Edge e : G[x]) 
+		      {
+				    if (dad[e.to] == null && e.cap - e.flow > 0) 
+				    {
+				      dad[e.to] = e;
+				      Q[tail++] = e.to;
+				    }
+		      }
+		    }
+		    if (dad[t] == null) return 0;
+
+		    long totflow = 0;
+		    for (Edge e1 : G[t]) 
+		    {
+		      Edge start = G[e1.to].get(e1.index);
+		      long amt = Long.MAX_VALUE / 4;
+		      for (Edge e = start; amt != 0 && e != dad[s]; e = dad[e.from])
+		      {
+			    if (e == null) { amt = 0; break; }
+			    	amt = Math.min(amt, e.cap - e.flow);
+			  }
+			  if (amt == 0) continue;
+			  for (Edge e = start; amt != 0 && e != dad[s]; e = dad[e.from])
+			  {
+			    e.flow += amt;
+			    G[e.to].get(e.index).flow -= amt;
+			   }
+			   totflow += amt;
+		    }
+		    return totflow;
+		  }
+
+		  long GetMaxFlow(int s, int t) 
+		  {
+		    long totflow = 0;
+		    long flow = 0;
+		    while ((flow = BlockingFlow(s, t)) != 0)
+		      totflow += flow;
+		    return totflow;
+		  }
+		}
+	
+	public static void main(String[] args)
+	{
+		Scanner sc = new Scanner();
+		while(true)
+		{
+			Integer vTmp = sc.nextInteger();
+			if(vTmp == null) return;
+			int v = vTmp;
+			int c = sc.nextInt();
+			Palabra[] vocabulario = sc.nextObjectArray(Palabra.class, v);
+			Palabra[] challenges = sc.nextObjectArray(Palabra.class, c);
+			int idActual = 0;
+			int source = idActual++;
+			int sink = idActual++;
+			for(Palabra p : vocabulario)
+				p.id = idActual++;
+			for(Palabra p : challenges)
+				p.id = idActual++;
+			Dinic dinic = new Dinic(idActual);
+			for(Palabra p : vocabulario)
+				dinic.AddEdge(p.id, sink, 1);
+			for(Palabra p : challenges)
+				dinic.AddEdge(source, p.id, 1);
+			for(Palabra challenge : challenges)
+				for(Palabra word : vocabulario)
+				{
+					if(word.can(challenge))
+						dinic.AddEdge(challenge.id, word.id, 1);
+				}
+			System.out.println(dinic.GetMaxFlow(source, sink));
+		}
+		
+	}
+}
